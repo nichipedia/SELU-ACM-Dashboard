@@ -6,10 +6,7 @@
 
 var errors = require('./components/errors');
 var path = require('path');
-//var stormpathExpressSDK = require('stormpath-sdk-express');
 
-
-//var spMiddleware = stormpathExpressSdk.createMiddleware();
 
 
 module.exports = function(app) {

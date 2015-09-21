@@ -32,3 +32,12 @@
 .navbar-text {
     margin-left: 15px;
 }
+
+.rcorners {
+    border-radius: 25px;
+    background: #8AC007;
+    padding: 20px; 
+    width: 200px;
+    height: 150px; 
+    background-color: lavenderblush;
+}
