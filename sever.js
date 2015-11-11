@@ -4,6 +4,7 @@ var path = require('path');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var crypto = require('crypto');
+var methodOverride = require('method-override');
    
 
 
@@ -38,10 +39,10 @@ app.use('/lib', express.static(__dirname + '/app/lib'));
 app.use('/', express.static(__dirname + '/app'));
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
-
+app.use(methodOverride());
 
 app.get('/home', function (req, res) {
-    res.sendFile(path.join(__dirname + '/app/index.html'));
+    res.status(200).sendFile(path.join(__dirname + '/app/index.html'));
     console.log('Success!');
 });
 
@@ -53,65 +54,50 @@ app.post('/api/login', function(req, res) {
 
 
 app.post('/api/register', function(req, res) {
-    
     console.log('Post success!!');
-    User.find({ email : req.body.email}, function(err, user) {
+    User.findOne({ email : req.body.email}, function(err, user) {
             if(err) {
                 throw err;
                 console.log('error querying db');
             }
-            if(user.length != 0) {
+            if(user.email != undefined) {
                 res.send('User already exsists');
                 console.log('User already exsists');
             }
-        else{
+      
+            else {
 
             var salt = generateSalt();
             
             var password = encrypt(req.body.password, salt);
             
             var newUser = new User({
-
                  firstName: req.body.firstName
                 ,lastName: req.body.lastName
                 ,password: password
                 ,email: req.body.email
                 ,salt: salt
-
-
-
             });
 
             newUser.save(function(err) {
                 if (err) throw err;
-
                 console.log('User created!');
             });
-
 
             delete user;
 
             User.findOne( {email : req.body.email}, function(err, user) {
-
                 console.log('User created this is your unique user ID: ' + user._id);
-
                 res.send('User created ' + ' your usernaame is: ' + user.userName + ' and this is your unique user ID: ' + user._id);
-
-
             });
 
-
         }
-
-    
     
     });
-    
-    
+        
 });
 
 function encrypt(plainText, salt) {
-
     var algorithm = 'aes-256-ctr';
     var cipher = crypto.createCipher(algorithm, salt);
     var crypted = cipher.update(plainText, 'utf8', 'hex');
