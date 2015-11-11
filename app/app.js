@@ -39,42 +39,72 @@ var app = angular.module('dashboard', ['ui.router', 'ngResource'])
     };
 }])
 
-.controller('HomeCtrl', ['$scope', function ($scope, $http) {
-    // $http.get('/api/things').success(function(awesomeThings) {
-    //   $scope.awesomeThings = awesomeThings;
-    // }); 
+.controller('HomeCtrl', ['$scope', function ($scope) {
+    $scope.message = 'we made it';  
 }])
 
-.controller('ResumesCtrl', ['$scope', function ($scope) {
-    $scope.message = 'we made it';   
-}])
+.controller('ResumesCtrl', ['$scope', 'api', function ($scope, api) {
 
-.controller('LoginCtrl', ['$scope', function ($scope) {
-    $scope.credentials = {
-        username : ''
-    ,   password : ''
+    $scope.uploadResume = function() {
+        var file        = document.getElementById('upload').files[0]
+        ,   reader      = new FileReader()
+        ;
+
+        reader.onloadend = function(e){
+            var bytes = e.target.result;
+
+            api.upload({
+                file : bytes
+            ,   name : file.name
+            }, function(res) {
+                console.log('file uploaded');
+                console.log(res);
+            });
+        }
+
+        reader.readAsBinaryString(file);
     }
 }])
 
-.controller('RegisterCtrl', ['$scope', 'RegisterUser', function($scope, RegisterUser) {
+.controller('LoginCtrl', ['$scope', 'api', function ($scope, api) {
+    $scope.email    = '';
+    $scope.password = '';
+
+    $scope.loginUser = function() {
+        api.login({
+            email       : $scope.email
+        ,   password    : $scope.password
+        }, function(res) {
+            console.log('logged in');
+            console.log(res);
+        });
+    }
+}])
+
+.controller('RegisterCtrl', ['$scope', 'api', function($scope, api) {
     $scope.firstName    = '';
     $scope.lastName     = '';
     $scope.email        = '';
     $scope.password     = '';
 
     $scope.saveUser = function() {
-        RegisterUser({
+        api.register({
             firstName   : $scope.firstName
         ,   lastName    : $scope.lastName
         ,   email       : $scope.email
         ,   password    : $scope.password
-        }, function(data) {
+        }, function(res) {
             console.log('user saved');
-            console.log(data);
+            console.log(res);
         });
     }
 }])
 
-.factory('RegisterUser', ['$resource', function($resource) {
-    return $resource('/api/register').save;
+.factory('api', ['$resource', function($resource) {
+    return {
+        register    : $resource('/api/register').save
+    ,   login       : $resource('/api/login').save
+    ,   upload      : $resource('/api/upload').save
+    }
 }])
+

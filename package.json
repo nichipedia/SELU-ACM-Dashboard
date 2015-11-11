@@ -9,6 +9,7 @@
   "author": "POALifters",
   "license": "MIT",
   "dependencies": {
+    "bcrypt": "^0.8.5",
     "body-parser": "^1.14.1",
     "crypto": "0.0.3",
     "express": "^4.13.3",
