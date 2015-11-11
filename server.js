@@ -47,7 +47,22 @@ app.get('/home', function (req, res) {
 });
 
 app.post('/api/login', function(req, res) {
-    
+    User.findOne({ email: req.body.email}, function(err, user) {
+       if(err) {
+           throw err;
+           console.log('error querying db');
+       } 
+        var userPassword = encrypt(req.body.password, user.salt);
+        if(userPassword != user.password) {
+            res.status(403);
+            console.log('Password incoorect');
+        }
+        else {
+            res.status(200).json({ "email" : user.email, "firstName" : user.firstName, "lastName" : user.lastName, "token" });
+        }
+        
+        
+    });
     
     
 });
@@ -61,7 +76,7 @@ app.post('/api/register', function(req, res) {
                 console.log('error querying db');
             }
             if(user.length != 0) {
-                res.send('User already exsists');
+                res.status(200).send('User already exsists');
                 console.log('User already exsists');
             }
       
@@ -87,14 +102,10 @@ app.post('/api/register', function(req, res) {
             newUser.save(function(err) {
                 if (err) throw err;
                 console.log('User created!');
+                res.status(201);
             });
 
             delete user;
-
-            User.findOne( {email : req.body.email}, function(err, user) {
-                console.log('User created this is your unique user ID: ' + user._id);
-               
-            });
 
         }
     
