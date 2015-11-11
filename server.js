@@ -20,11 +20,11 @@ mongoose.connection.on('error', function(err) {
 });
 
 var userSchema = new mongoose.Schema({
-    firstName   : String
-,   lastName    : String
-,   password    : String
-,   email       : String
-,   salt        : String
+     firstName: String
+    ,lastName: String
+    ,password: String
+    ,email: String
+    ,salt: String
     
 });
 
@@ -39,7 +39,7 @@ app.use('/lib', express.static(__dirname + '/app/lib'));
 app.use('/', express.static(__dirname + '/app'));
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
-app.use(methodOverride());
+//app.use(methodOverride());
 
 app.get('/home', function (req, res) {
     res.status(200).sendFile(path.join(__dirname + '/app/index.html'));
@@ -55,12 +55,12 @@ app.post('/api/login', function(req, res) {
 
 app.post('/api/register', function(req, res) {
     console.log('Post success!!');
-    User.findOne({ email : req.body.email}, function(err, user) {
+    User.find({ email : req.body.email}, function(err, user) {
             if(err) {
                 throw err;
                 console.log('error querying db');
             }
-            if(user.email != undefined) {
+            if(user.length != 0) {
                 res.send('User already exsists');
                 console.log('User already exsists');
             }
@@ -88,7 +88,7 @@ app.post('/api/register', function(req, res) {
 
             User.findOne( {email : req.body.email}, function(err, user) {
                 console.log('User created this is your unique user ID: ' + user._id);
-                res.send('User created ' + ' your usernaame is: ' + user.userName + ' and this is your unique user ID: ' + user._id);
+               
             });
 
         }
