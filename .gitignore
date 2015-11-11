@@ -1,0 +1,6 @@
+
+#Exclude modules
+node_modules
+
+#exclude Mac file thingy
+.DS_Store

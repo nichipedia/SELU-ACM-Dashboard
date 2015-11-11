@@ -44,8 +44,8 @@ var app = angular.module('dashboard', ['ui.router', 'ngResource'])
     $scope.message = 'we made it';   
 }])
 
-.controller('LoginCtrl', ['$scope', '$rootScope', 'AUTH_EVENTS', 'AuthService',
-    function ($scope, $rootScope, AUTH_EVENTS, AuthService) {
+.controller('LoginCtrl', ['$scope',
+    function ($scope) {
     $scope.credentials = {
         username : ''
     ,   password : ''

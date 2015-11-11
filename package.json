@@ -1,0 +1,21 @@
+{
+  "name": "selu-acm-dashboard",
+  "version": "1.0.0",
+  "description": "This will be the ACM default dashboard",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "POALifters",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.14.1",
+    "crypto": "0.0.3",
+    "express": "^4.13.3",
+    "kerberos": "0.0.17",
+    "mongodb": "^2.0.48",
+    "mongodb-core": "^1.2.21",
+    "mongoose": "^4.2.5",
+    "path": "^0.12.7"
+  }
+}
