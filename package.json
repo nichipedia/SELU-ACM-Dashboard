@@ -2,7 +2,7 @@
   "name": "selu-acm-dashboard",
   "version": "1.0.0",
   "description": "This will be the ACM default dashboard",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

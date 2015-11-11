@@ -40,6 +40,10 @@ app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
 
 
+app.get('/favicon.ico', function(req, res) {
+    res.sendFile(path.join(_dirname + '/favicon.ico'));
+});
+
 app.get('/home', function (req, res) {
     res.sendFile(path.join(__dirname + '/app/index.html'));
     console.log('Success!');
