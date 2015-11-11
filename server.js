@@ -69,12 +69,17 @@ app.post('/api/register', function(req, res) {
 
             var salt = generateSalt();
             
-            var password = encrypt(req.body.password, salt);
+            var hash = crypto
+                    .createHash('sha256')
+                    .update(salt + req.body.password)
+                    .digest('base64');
+
+           
             
             var newUser = new User({
                  firstName: req.body.firstName
                 ,lastName: req.body.lastName
-                ,password: password
+                ,password: hash
                 ,email: req.body.email
                 ,salt: salt
             });
@@ -97,7 +102,7 @@ app.post('/api/register', function(req, res) {
         
 });
 
-function encrypt(plainText, salt) {
+/*function encrypt(plainText, salt) {
     var algorithm = 'aes-256-ctr';
     var cipher = crypto.createCipher(algorithm, salt);
     var crypted = cipher.update(plainText, 'utf8', 'hex');
@@ -113,7 +118,7 @@ function decrypt(encryptedText, salt){
     var dec = decipher.update(encryptedText,'hex','utf8')
     dec += decipher.final('utf8');
     return dec;
-}
+}*/
 
 function generateSalt() {
    return crypto.randomBytes(16).toString('base64');
