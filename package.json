@@ -14,6 +14,7 @@
     "crypto": "0.0.3",
     "express": "^4.13.3",
     "kerberos": "0.0.17",
+    "method-override": "^2.3.5",
     "mongodb": "^2.0.48",
     "mongodb-core": "^1.2.21",
     "mongoose": "^4.2.5",
