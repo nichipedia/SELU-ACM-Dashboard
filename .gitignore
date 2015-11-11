@@ -1,4 +1,7 @@
 
+#log files
+*.log
+
 #Exclude modules
 node_modules
 
