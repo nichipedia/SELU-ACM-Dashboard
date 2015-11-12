@@ -2,16 +2,21 @@
 	<div class="row">
 		<div class="col-md-8">
 			<h1>Login to da club</h1>
-			<form>
+			<form class="form-horizontal">
 				<div class="form-group">
-					<label for="email" class="control-label">Email</label>
-					<input id="email" class="form-control" type="email" placeholder="Email" ng-model="email" />
+					<label for="email" class="control-label col-md-2">Email</label>
+					<div class="col-md-8">
+						<input id="email" class="form-control" type="email" placeholder="Email" ng-model="email" />
+					</div>
 				</div>
 				<div class="form-group">
-					<label for="password" class="control-label">Password</label>
-					<input id="password" class="form-control" type="password" ng-model="password" />
+					<label for="password" class="control-label col-md-2">Password</label>
+					<div class="col-md-8">
+						<input id="password" class="form-control" type="password" ng-model="password" />
+					</div>
 				</div>
-				<button id="login-btn" class="btn btn-primary" ng-click="loginUser()" >Login</button>
+				<p class="help-block col-md-offset-2">Not registered? <a href="#/register">Sign Up</a></p>
+				<button id="login-btn" class="btn btn-primary col-md-offset-2" ng-click="loginUser()" >Login</button>
 			</form>
 		</div>
 	</div>

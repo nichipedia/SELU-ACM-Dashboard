@@ -2,24 +2,33 @@
 	<div class="row">
 		<div class="col-md-8">
 			<h1>Join da club</h1>
-			<form>
+			<form class="form-horizontal">
 				<div class="form-group">
-					<label for="first-name" class="control-label">First Name</label>
-					<input id="first-name" class="form-control" type="text" placeholder="First Name" ng-model="firstName" />
+					<label for="first-name" class="control-label col-md-2">First Name</label>
+					<div class="col-md-8">
+						<input id="first-name" class="form-control" type="text" placeholder="First Name" ng-model="firstName" />
+					</div>
 				</div>
 				<div class="form-group">
-					<label for="last-name" class="control-label">Last Name</label>
-					<input id="last-name" class="form-control" type="text" placeholder="Last Name" ng-model="lastName" />
+					<label for="last-name" class="control-label col-md-2">Last Name</label>
+					<div class="col-md-8">
+						<input id="last-name" class="form-control" type="text" placeholder="Last Name" ng-model="lastName" />
+					</div>
 				</div>
 				<div class="form-group">
-					<label for="email" class="control-label">Email</label>
-					<input id="email" class="form-control" type="email" placeholder="Email" ng-model="email" />
+					<label for="email" class="control-label col-md-2">Email</label>
+					<div class="col-md-8">
+						<input id="email" class="form-control" type="email" placeholder="Email" ng-model="email" />
+					</div>
 				</div>
+				<p class="help-block col-md-offset-2">Must be a valid Southeastern webmail account</p>
 				<div class="form-group">
-					<label for="password" class="control-label">Password</label>
-					<input id="password" class="form-control" type="password" ng-model="password" />
+					<label for="password" class="control-label col-md-2">Password</label>
+					<div class="col-md-8">
+						<input id="password" class="form-control" type="password" ng-model="password" />
+					</div>
 				</div>
-				<button id="login-btn" class="btn btn-primary" ng-click="saveUser()" >Register</button>
+				<button id="login-btn" class="btn btn-primary col-md-offset-2" ng-click="saveUser()" >Register</button>
 			</form>
 		</div>
 	</div>

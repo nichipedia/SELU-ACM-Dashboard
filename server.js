@@ -127,7 +127,7 @@ app.post('/api/upload', function(req, res) {
                res.status(403).json({ success : false, message : 'Failed to authenticate token'});
            }
             else {
-                var fileName    = 'resumes/' + decode.lastName + '_' + decode.firstName + '_' + decode.Id + '.pdf';
+                var fileName    = 'resumes/' + decode.lastName + '_' + decode.firstName + '_' + decode.Id + '.pdf'
                 ,   contents    = req.body.file
                 ;
 

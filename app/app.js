@@ -35,6 +35,7 @@ var app = angular.module('dashboard', ['ui.router', 'ngResource'])
 
 .controller('NavCtrl', ['$scope', '$location', function ($scope, $location) {
     $scope.isActive = function (viewLocation) {
+        $('.collapse').collapse('hide');
         return viewLocation === $location.path();
     };
 }])
@@ -66,7 +67,7 @@ var app = angular.module('dashboard', ['ui.router', 'ngResource'])
     }
 }])
 
-.controller('LoginCtrl', ['$scope', 'api', function ($scope, api) {
+.controller('LoginCtrl', ['$scope', '$window', 'api', function ($scope, $window, api) {
     $scope.email    = '';
     $scope.password = '';
 
@@ -75,8 +76,10 @@ var app = angular.module('dashboard', ['ui.router', 'ngResource'])
             email       : $scope.email
         ,   password    : $scope.password
         }, function(res) {
-            console.log('logged in');
-            console.log(res);
+            $window.sessionStorage.setItem('firstName', res.user.firstName);
+            $window.sessionStorage.setItem('lastName',  res.user.lastName);
+            $window.sessionStorage.setItem('email',     res.user.email);
+            $window.sessionStorage.setItem('token',     res.token);
         });
     }
 }])
