@@ -6,7 +6,7 @@ var express         = require('express')
 ,   crypto          = require('crypto')
 ,   fs              = require('fs')
 ,   methodOverride  = require('method-override')
-,   jwt             =require('jsonwebtoken');
+,   jwt             = require('jsonwebtoken');
 ;
 
 
@@ -51,6 +51,7 @@ app.get('/favicon.ico', function(req, res) {
     res.sendFile(path.join(__dirname + '/favicon.ico'));
 });
 
+//this should be a get
 app.post('/api/login', function(req, res) {
     User.findOne({ email: req.body.email}, function(err, user) {
        if(err) {
@@ -86,6 +87,7 @@ app.post('/api/register', function(req, res) {
             throw err;
             console.log('error querying db');
         } else if(user) {
+            //This shouldn't be an okay response
             res.status(200).send('User already exsists');
             console.log('User already exsists');
         } else {
@@ -141,6 +143,16 @@ app.post('/api/upload', function(req, res) {
     }
     
     
+});
+
+app.get('/api/files', function(req, res){
+  fs.readdir('resumes/', function(err, files) {
+    if (err){
+     res.status(404).json({success: false, message: 'Failed to retrieve files'});
+     return; 
+    } 
+    res.status(200).json({success: true, message: 'We made it', fileList: files});
+  });
 });
 
 
