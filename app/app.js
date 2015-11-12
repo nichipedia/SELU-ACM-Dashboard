@@ -38,13 +38,13 @@ var app = angular.module('dashboard', ['ui.router', 'ngResource'])
 
 .controller('NavCtrl', ['$scope', '$window', '$location', function ($scope, $window, $location) {
     $scope.isActive = function (viewLocation) {
-        $scope.isLoggedIn = $window.sessionStorage['token'];
+        $scope.isLoggedIn = !!$window.sessionStorage['token'];
         $('.collapse').collapse('hide');
         return viewLocation === $location.path();
     }
 
     $scope.logout = function () {
-        $window.sessionStorage['token'] = '';
+        $window.sessionStorage.clear();
     }
 }])
 
