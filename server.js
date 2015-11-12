@@ -51,13 +51,7 @@ app.get('/favicon.ico', function(req, res) {
     res.sendFile(path.join(__dirname + '/favicon.ico'));
 });
 
-app.get('/home', function (req, res) {
-    res.status(200).sendFile(path.join(__dirname + '/app/index.html'));
-    console.log('Success!');
-});
-
-
-    app.post('/api/login', function(req, res) {
+app.post('/api/login', function(req, res) {
     User.findOne({ email: req.body.email}, function(err, user) {
        if(err) {
            throw err;
@@ -187,6 +181,12 @@ function generateHash(password, salt) {
 function generateSalt() {
    return crypto.randomBytes(16).toString('base64');
 }
+
+
+app.all('/*', function (req, res) {
+    res.status(200).sendFile(path.join(__dirname + '/app/index.html'));
+    console.log('Success!');
+});
 
 var server = app.listen(3000, function () {
     var host = server.address().address;
