@@ -1,35 +1,40 @@
 <div class="container">
 	<div class="row">
-		<div class="col-md-8">
-			<h1>Join da club</h1>
-			<form class="form-horizontal">
-				<div class="form-group">
-					<label for="first-name" class="control-label col-md-2">First Name</label>
-					<div class="col-md-8">
-						<input id="first-name" class="form-control" type="text" placeholder="First Name" ng-model="firstName" />
-					</div>
+		<h1>Join da club</h1>
+		<form class="form-horizontal">
+			<div class="form-group">
+				<label for="first-name" class="control-label col-md-2">First Name</label>
+				<div class="col-md-6">
+					<input id="first-name" class="form-control" type="text" placeholder="First Name" required ng-model="firstName" />
 				</div>
-				<div class="form-group">
-					<label for="last-name" class="control-label col-md-2">Last Name</label>
-					<div class="col-md-8">
-						<input id="last-name" class="form-control" type="text" placeholder="Last Name" ng-model="lastName" />
-					</div>
+			</div>
+			<div class="form-group">
+				<label for="last-name" class="control-label col-md-2">Last Name</label>
+				<div class="col-md-6">
+					<input id="last-name" class="form-control" type="text" placeholder="Last Name" required ng-model="lastName" />
 				</div>
-				<div class="form-group">
-					<label for="email" class="control-label col-md-2">Email</label>
-					<div class="col-md-8">
-						<input id="email" class="form-control" type="email" placeholder="Email" ng-model="email" />
-					</div>
+			</div>
+			<div class="form-group">
+				<label for="email" class="control-label col-md-2">Webmail</label>
+				<div class="col-md-6">
+					<input id="email" class="form-control" type="email" placeholder="Southeastern Webmail" pattern="^([\w.]+)@selu.edu$" required ng-model="email" />
 				</div>
-				<p class="help-block col-md-offset-2">Must be a valid Southeastern webmail account</p>
-				<div class="form-group">
-					<label for="password" class="control-label col-md-2">Password</label>
-					<div class="col-md-8">
-						<input id="password" class="form-control" type="password" ng-model="password" />
-					</div>
+			</div>
+			<p class="help-block col-md-offset-2" >Must be a valid Southeastern Webmail account</p>
+			<div class="form-group">
+				<label for="password" class="control-label col-md-2">Password</label>
+				<div class="col-md-6">
+					<input id="password" class="form-control" type="password" required ng-model="password" />
 				</div>
-				<button id="login-btn" class="btn btn-primary col-md-offset-2" ng-click="saveUser()" >Register</button>
-			</form>
-		</div>
+			</div>
+			<div class="form-group">
+				<label for="confirm" class="control-label col-md-2">Confirm Password</label>
+				<div class="col-md-6">
+					<input id="confirm" class="form-control" type="password" required ng-model="confirm" />
+				</div>
+				<p class="text-danger col-md-4" ng-show="confirm!==''&&password!==confirm">Passwords do not match</p>
+			</div>
+			<button id="login-btn" class="btn btn-primary col-md-offset-2" ng-click="saveUser()" ng-disabled="confirm!==''&&password!==confirm">Register</button>
+		</form>
 	</div>
 </div>

@@ -20,19 +20,18 @@ mongoose.connection.on('error', function(err) {
 });
 
 var userSchema = new mongoose.Schema({
-     firstName: String
-    ,lastName: String
-    ,password: String
-    ,email: String
-    ,salt: String
-    
+    firstName   : String
+,   lastName    : String
+,   password    : String
+,   email       : String
+,   salt        : String    
 });
 
 
 
 var User = mongoose.model('User', userSchema);
 
-mongoose.connect('mongodb://pawn:34erdfcv#$ERDFCV@ds053794.mongolab.com:53794/selu-acm-db');
+// mongoose./connect('mongodb://pawn:34erdfcv#$ERDFCV@ds053794.mongolab.com:53794/selu-acm-db');
 
 
 app.use('/lib', express.static(__dirname + '/app/lib'));
@@ -83,6 +82,12 @@ app.post('/api/login', function(req, res) {
 app.post('/api/register', function(req, res) {
     console.log('Post success!!');
     User.findOne({ email : req.body.email}, function(err, user) {
+        var firstName   = sanitizeInput(req.body.firstName)
+        ,   lastName    = sanitizeInput(req.body.lastName)
+        ,   email       = sanitizeInput(req.body.email)
+        ,   password    = req.body.password
+        ;
+
         if(err) {
             throw err;
             console.log('error querying db');
@@ -90,15 +95,18 @@ app.post('/api/register', function(req, res) {
             //This shouldn't be an okay response
             res.status(200).send('User already exsists');
             console.log('User already exsists');
+        } else if (!validEmail(email)) {
+            res.status(403).send('Please submit a valid selu.edu email address');
+            console.log('Invalid Email ' + email);
         } else {
             var salt = generateSalt();
-            var hash = generateHash(req.body.password, salt);
+            var hash = generateHash(password, salt);
 
             var newUser = new User({
-                firstName   : req.body.firstName
-            ,   lastName    : req.body.lastName
+                firstName   : firstName
+            ,   lastName    : lastName
             ,   password    : hash
-            ,   email       : req.body.email
+            ,   email       : email
             ,   salt        : salt
             });
 
@@ -156,30 +164,19 @@ app.get('/api/files', function(req, res){
 });
 
 
-/*
-function encrypt(plainText, salt) {
-    User.findOne( {email : req.body.email}, function(err, user) {
-        console.log('User created this is your unique user ID: ' + user._id);
-        res.send('User created ' + ' your username is: ' + user.userName + ' and this is your unique user ID: ' + user._id);
-    });
+app.all('/*', function (req, res) {
+    res.status(200).sendFile(path.join(__dirname + '/app/index.html'));
+    console.log('Success!');
 });
-*/
 
-// function encrypt(plainText, salt) {
-//     var algorithm = 'aes-256-ctr';
-//     var cipher = crypto.createCipher(algorithm, salt);
-//     var crypted = cipher.update(plainText, 'utf8', 'hex');
-//     crypted += cipher.final('hex');
-//     return crypted;
-// }
+var server = app.listen(3000, function () {
+    var host = server.address().address;
+    var port = server.address().port;
 
-// function decrypt(encryptedText, salt){
-//     var algorithm = 'aes-256-ctr';
-//     var decipher = crypto.createDecipher(algorithm, salt)
-//     var dec = decipher.update(encryptedText,'hex','utf8')
-//     dec += decipher.final('utf8');
-//     return dec;
-// }
+    console.log('Magic happening on port ' + port);
+    
+});
+
 
 function generateHash(password, salt) {
     var hash = crypto
@@ -194,16 +191,10 @@ function generateSalt() {
    return crypto.randomBytes(16).toString('base64');
 }
 
+function sanitizeInput(input) {
+    return input.replace('<', '&lt;').replace('>', '&gt;');
+}
 
-app.all('/*', function (req, res) {
-    res.status(200).sendFile(path.join(__dirname + '/app/index.html'));
-    console.log('Success!');
-});
-
-var server = app.listen(3000, function () {
-    var host = server.address().address;
-    var port = server.address().port;
-
-    console.log('Magic happening on port ' + port);
-    
-});
+function validEmail(email) {
+    return /^([\w.]+)@selu.edu$/g.test(email);
+}

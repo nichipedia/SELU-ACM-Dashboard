@@ -98,6 +98,7 @@ var app = angular.module('dashboard', ['ui.router', 'ngResource'])
     $scope.lastName     = '';
     $scope.email        = '';
     $scope.password     = '';
+    $scope.confirm      = '';
 
     $scope.saveUser = function () {
         api.register({
