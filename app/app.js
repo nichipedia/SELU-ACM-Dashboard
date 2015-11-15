@@ -30,6 +30,11 @@ var app = angular.module('dashboard', ['ui.router', 'ngResource'])
         ,   templateUrl     : 'views/register.html'
         ,   controller      : 'RegisterCtrl'
         })
+        .state('contact', {
+            url             : '/contact'
+        ,   templateUrl     : 'views/contact.html'
+        ,   controller      : 'ContactCtrl'
+        })
         ;
 
     $locationProvider.html5Mode(true);
@@ -120,4 +125,35 @@ var app = angular.module('dashboard', ['ui.router', 'ngResource'])
     ,   upload      : $resource('/api/upload').save
     }
 }])
+
+.directive('contactPane', function() {
+    return {
+        restrict: 'A',
+        scope: {
+            member: '=name'
+        },
+        templateUrl: 'views/contact_pane.html'
+    }
+})
+
+.controller('ContactCtrl', ['$scope', function($scope) {
+    $scope.nick = { 
+        name    : 'Nicholas Moran'
+    ,   role    : 'Team Leader'
+    ,   email   : 'nicholas.moran@selu.edu'
+    ,   image   : 'images/nick.jpg'
+    };
+    $scope.seth = { 
+        name    : 'Seth Champagne'
+    ,   role    : 'Cool Guy'
+    ,   email   : 'seth.champagne@selu.edu'
+    ,   image   : 'images/seth.jpg'
+    };
+    $scope.tyler = { 
+        name    : 'Tyler Becker'
+    ,   role    : 'ACM President'
+    ,   email   : 'tyler.becker@selu.edu'
+    ,   image   : 'images/tyler.jpg'
+    };
+}]);
 
