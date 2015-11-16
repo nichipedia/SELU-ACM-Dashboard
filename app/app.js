@@ -30,6 +30,11 @@ var app = angular.module('dashboard', ['ui.router', 'ngResource'])
         ,   templateUrl     : 'views/register.html'
         ,   controller      : 'RegisterCtrl'
         })
+        .state('members', {
+            url             : '/members'
+        ,   templateUrl     : 'views/members.html'
+        ,   controller      : 'MembersCtrl'
+        })
         .state('contact', {
             url             : '/contact'
         ,   templateUrl     : 'views/contact.html'
@@ -80,6 +85,23 @@ var app = angular.module('dashboard', ['ui.router', 'ngResource'])
     }
 }])
 
+.controller('MembersCtrl', ['$scope', 'api',  function ($scope, api) {
+    api.files({
+        bruh   : ''
+    }, function (res){
+      $scope.fileList = res.fileList; 
+      $scope.dirname = res.directory; 
+    });
+
+    $scope.download = function(fileName) {
+        api.download({
+            fileName   : fileName
+        }, function (res){
+            console.log('we made it');
+        });
+    }
+}])
+
 .controller('LoginCtrl', ['$scope', '$window', '$location', 'api', function ($scope, $window, $location, api) {
     $scope.email    = '';
     $scope.password = '';
@@ -123,6 +145,8 @@ var app = angular.module('dashboard', ['ui.router', 'ngResource'])
         register    : $resource('/api/register').save
     ,   login       : $resource('/api/login').save
     ,   upload      : $resource('/api/upload').save
+    ,   files       : $resource('/api/files').save
+    ,   download    : $resource('/api/download').save
     }
 }])
 

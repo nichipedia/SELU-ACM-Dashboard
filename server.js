@@ -31,7 +31,7 @@ var userSchema = new mongoose.Schema({
 
 var User = mongoose.model('User', userSchema);
 
-mongoose./connect('mongodb://pawn:34erdfcv#$ERDFCV@ds053794.mongolab.com:53794/selu-acm-db');
+mongoose.connect('mongodb://pawn:34erdfcv#$ERDFCV@ds053794.mongolab.com:53794/selu-acm-db');
 
 
 app.use('/lib', express.static(__dirname + '/app/lib'));
@@ -152,15 +152,22 @@ app.post('/api/upload', function(req, res) {
     
     
 });
-
-app.get('/api/files', function(req, res){
+//maybe if this is a get it breaks
+app.post('/api/files', function(req, res){
   fs.readdir('resumes/', function(err, files) {
     if (err){
      res.status(404).json({success: false, message: 'Failed to retrieve files'});
      return; 
+    }else{
+      res.status(200).json({success: true, message: 'We made it', fileList: files});
     } 
-    res.status(200).json({success: true, message: 'We made it', fileList: files});
   });
+});
+
+//Need to fix this/Do the pdf stuffs
+app.get('/api/download', function(req, res){
+  var file = __dirname + '/resumes/' + req.body.fileName;
+  res.download(file);
 });
 
 

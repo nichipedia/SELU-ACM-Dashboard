@@ -5,7 +5,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/cerulean/bootstrap.min.css" />
 		<link rel="stylesheet" href="site.css" />
 		<base href="/" /> 
 	</head>
@@ -25,7 +25,8 @@
 						<ul class="nav navbar-nav">
 							<li ng-class="{ active: isActive('/home') }"><a href="/home">Home</a></li>
 							<li ng-class="{ active: isActive('/slugo') }"><a href="/slugo">SLUGO</a></li>
-							<li ng-class="{ active: isActive('/resumes') }"><a href="/resumes">Resumes</a></li>
+							<li ng-class="{ active: isActive('/resumes')}" ng-show="isLoggedIn"><a href="/resumes">Resumes</a></li>
+							<li ng-class="{ active: isActive('/members')}"><a href="/members">Members</a></li>
 							<li ng-class="{ active: isActive('/login') }" ng-hide="isLoggedIn"><a href="/login">Login</a></li>
 							<li ng-class="{ active: isActive('') }" ng-show="isLoggedIn" ng-click="logout()"><a href="/login">Logout</a></li>
 						</ul>
