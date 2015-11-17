@@ -131,7 +131,7 @@ app.post('/api/upload', function(req, res) {
                res.status(403).json({ success : false, message : 'Failed to authenticate token'});
            }
             else {
-                var fileName    = 'resumes/' + decode.lastName + '_' + decode.firstName + '_' + decode.Id + '.pdf'
+                var fileName    = 'resumes/' + decode.lastName + '_' + decode.firstName + '_' + decode._id + '.pdf'
                 ,   contents    = req.body.file
                 ;
 
@@ -152,8 +152,8 @@ app.post('/api/upload', function(req, res) {
     
     
 });
-//maybe if this is a get it breaks
-app.post('/api/files', function(req, res){
+
+app.get('/api/files', function(req, res){
   fs.readdir('resumes/', function(err, files) {
     if (err){
      res.status(404).json({success: false, message: 'Failed to retrieve files'});
@@ -165,8 +165,9 @@ app.post('/api/files', function(req, res){
 });
 
 //Need to fix this/Do the pdf stuffs
-app.get('/api/download', function(req, res){
-  var file = __dirname + '/resumes/' + req.body.fileName;
+app.get('/api/download/:fileName', function(req, res){
+  var file = __dirname + '/resumes/' + req.params.fileName;
+  console.log(file);
   res.download(file);
 });
 

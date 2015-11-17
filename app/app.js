@@ -62,7 +62,7 @@ var app = angular.module('dashboard', ['ui.router', 'ngResource'])
     $scope.message = 'we made it';  
 }])
 
-.controller('ResumesCtrl', ['$scope', 'api', function ($scope, api) {
+.controller('ResumesCtrl', ['$scope', '$window', 'api', function ($scope, $window, api) {
 
     $scope.uploadResume = function() {
         var file        = document.getElementById('upload').files[0]
@@ -73,8 +73,9 @@ var app = angular.module('dashboard', ['ui.router', 'ngResource'])
             var bytes = e.target.result;
 
             api.upload({
-                file : bytes
-            ,   name : file.name
+                file    : bytes
+            ,   name    : file.name
+            ,   token   : $window.sessionStorage['token']
             }, function(res) {
                 console.log('file uploaded');
                 console.log(res);
@@ -86,20 +87,10 @@ var app = angular.module('dashboard', ['ui.router', 'ngResource'])
 }])
 
 .controller('MembersCtrl', ['$scope', 'api',  function ($scope, api) {
-    api.files({
-        bruh   : ''
-    }, function (res){
+    api.files(function (res){
       $scope.fileList = res.fileList; 
       $scope.dirname = res.directory; 
     });
-
-    $scope.download = function(fileName) {
-        api.download({
-            fileName   : fileName
-        }, function (res){
-            console.log('we made it');
-        });
-    }
 }])
 
 .controller('LoginCtrl', ['$scope', '$window', '$location', 'api', function ($scope, $window, $location, api) {
@@ -145,8 +136,7 @@ var app = angular.module('dashboard', ['ui.router', 'ngResource'])
         register    : $resource('/api/register').save
     ,   login       : $resource('/api/login').save
     ,   upload      : $resource('/api/upload').save
-    ,   files       : $resource('/api/files').save
-    ,   download    : $resource('/api/download').save
+    ,   files       : $resource('/api/files').get
     }
 }])
 
